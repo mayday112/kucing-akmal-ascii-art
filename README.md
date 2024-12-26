@@ -1,2 +1,2 @@
 # ascii-art-video
-Ini source code untuk mengubah video webcam kalian menjadi ASCII art
+Ini source code untuk mengubah video yang ada pada folder video menjadi ASCII art
