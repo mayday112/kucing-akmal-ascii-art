@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ascii Art Video</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: rgb(24, 24, 27);
+        color: white;
+        font-family: "Courier";
+        font-size: 10pt;
+        line-height: 10pt;
+        letter-spacing: 5pt;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div></div>
+    <button onclick="playVideo()">Play video</button>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"
+      integrity="sha512-uaz5GpnQoE6t5echKlX8P52czvsIGgLPcvlzfvRubLZ1Hp8JemUDnbUiAahbVtPb+jUVrNETuXvAhDDF/N3M4w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script>
+      const density = "@@@@#W$987654321?!ABC;:+=-,._        ";
+      let video;
+      let asciiDiv;
+
+      function setup() {
+        video = createVideo("video/UAUIUIIAA.mp4");
+        video.size(75, 75);
+        video.loop();
+        asciiDiv = createDiv();
+      }
+
+      function draw() {
+        video.loadPixels();
+        let frame = "";
+        for (let i = 0; i < video.height; i++) {
+          for (let j = 0; j < video.width; j++) {
+            const indexPixel = (j + i * video.width) * 4;
+            const r = video.pixels[indexPixel + 0];
+            const g = video.pixels[indexPixel + 1];
+            const b = video.pixels[indexPixel + 2];
+            const avg = (r + g + b) / 3;
+            const len = density.length;
+            const indexChar = floor(map(avg, 0, 255, len, 0));
+            const c = density.charAt(indexChar);
+            if (c == " ") frame += "&nbsp;";
+            else frame += c;
+          }
+          frame += "<br/>";
+        }
+        asciiDiv.html(frame);
+      }
+
+      function playVideo() {
+        document.querySelector("video").play();
+      }
+    </script>
+  </body>
+</html>
